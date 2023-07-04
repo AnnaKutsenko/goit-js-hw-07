@@ -19,10 +19,27 @@ const galleryMarkUp = galleryItems
 
 galleryContainer.insertAdjacentHTML('beforeend', galleryMarkUp);
 
-galleryContainer.addEventListener('click', onClick)
-function onClick(evt) {
-    if (evt.target.classList.contains('gallery__image')) {
-        evt.preventDefault();
-        basicLightbox.create(`<img width="1400" height="900" src="${evt.target.dataset.source}">`).show();
+galleryContainer.onclick = (evt) => {
+    evt.preventDefault();
+    if (!evt.target.classList.contains('gallery__image')) {
+        return;
     }
+    const instance = basicLightbox.create(`<img width="1400" height="900" src="${evt.target.dataset.source}">`,
+        {
+            onShow: () => {
+                window.addEventListener('keydown', onEscape);
+            },
+            onClose: () => {
+                window.removeEventListener('keydown', onEscape);
+            },
+        }
+    );
+    
+    function onEscape(evt) {
+       if (evt.key === 'Escape') {
+            instance.close();
+        }
+    }
+
+    instance.show(evt);
 }
