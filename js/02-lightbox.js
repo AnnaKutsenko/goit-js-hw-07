@@ -15,5 +15,4 @@ const galleryMarkUp = galleryItems
     .join(' ');
 
 galleryContainer.insertAdjacentHTML('beforeend', galleryMarkUp);
-
-var lightbox = new SimpleLightbox('.gallery__item a', { animationSpeed: 250, captionsData: "alt" });
+const lightbox = new SimpleLightbox('.gallery__item a', { animationSpeed: 250, captionsData: "alt" });
